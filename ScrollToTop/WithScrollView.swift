@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  WithScrollView.swift
 //  ScrollToTop
 //
 //  Created by D. Prameswara on 29/07/23.
@@ -7,20 +7,24 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct WithScrollView: View {
     var body: some View {
         ScrollViewReader { proxy in
-            VStack {
-                List {
+            ScrollView {
+                LazyVStack {
                     ForEach(1 ... 100, id: \.self) { i in
                         Text("Item number \(i)")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, 5)
                             .id(i)
                     }
                 }
-                Button("Move to top") {
-                    withAnimation(.easeIn(duration: 1.0)) {
-                        proxy.scrollTo(1)
-                    }
+                .padding()
+            }
+
+            Button("Move to top") {
+                withAnimation(.easeIn(duration: 1.0)) {
+                    proxy.scrollTo(1)
                 }
             }
         }
@@ -28,10 +32,10 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct WithScrollView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ContentView()
+            WithScrollView()
         }
     }
 }
